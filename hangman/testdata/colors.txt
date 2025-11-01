@@ -1,0 +1,3 @@
+Colors
+Red,The color of blood
+Blue,The color of the sky

@@ -32,8 +32,7 @@ type Hangman struct {
 	additionalMaxGuesses int
 }
 
-// NewHangman creates a new Hangman game instance and loads words from the default data directory.
-// Returns an error if the word data cannot be loaded.
+// NewHangman creates a new Hangman game instance with default settings.
 func NewHangman() (*Hangman, error) {
 	wordLoader := NewWordLoader()
 	if err := wordLoader.Load(DefaultDataDir); err != nil {
@@ -47,8 +46,7 @@ func NewHangman() (*Hangman, error) {
 	}, nil
 }
 
-// Start runs the main game loop, managing state transitions between pending, playing, win, lose, and quit states.
-// The loop continues until the user quits the game.
+// Start runs the main game loop until the user quits.
 func (h *Hangman) Start() {
 	var game *HangmanGame
 	for {
@@ -80,9 +78,7 @@ func (h *Hangman) Start() {
 	}
 }
 
-// createGame displays a category selection menu and creates a new game instance.
-// Returns the created game, the next game state, and any error that occurred.
-// If the user selects quit or an error occurs, returns GameStateQuit.
+// createGame displays the category menu and creates a new game instance.
 func (h *Hangman) createGame() (*HangmanGame, GameState, error) {
 	categories := h.WordLoader.Categories()
 	items := make([]string, 0)
@@ -132,8 +128,6 @@ type HangmanGame struct {
 }
 
 // NewHangmanGame creates a new game instance for a specific word.
-// The remaining attempts are calculated as the word's alphabet length plus additional guesses.
-// Returns an error if the word is nil, empty, or if maxGuesses is negative.
 func NewHangmanGame(word *Word, maxGuesses int) (*HangmanGame, error) {
 	if word == nil {
 		return nil, errors.New("word cannot be nil")
@@ -158,9 +152,7 @@ func NewHangmanGame(word *Word, maxGuesses int) (*HangmanGame, error) {
 	}, nil
 }
 
-// Play runs the main game loop for a single round of Hangman.
-// Displays the hint, collects user input, processes guesses, and checks for win/loss conditions.
-// Returns the next game state: GameStateWin, GameStateLose, or GameStateQuit.
+// Play runs the main game loop for a single round.
 func (g *HangmanGame) Play() GameState {
 	logrus.Info("Hint: ", g.hint)
 	for g.remaining > 0 {
@@ -182,8 +174,7 @@ func (g *HangmanGame) Play() GameState {
 	return GameStateLose
 }
 
-// displayAnswer shows the current game state including the answer with guessed letters,
-// the current score, remaining attempts, and incorrect guesses.
+// displayAnswer shows the current game state and statistics.
 func (g *HangmanGame) displayAnswer() {
 	builder := new(strings.Builder)
 	builder.WriteString(strings.Join(g.answer, " "))
@@ -193,9 +184,7 @@ func (g *HangmanGame) displayAnswer() {
 	logrus.Info(builder.String())
 }
 
-// input prompts the user to enter a single alphabetic character guess.
-// Validates that the input is exactly one alphabetic character.
-// Returns the lowercase letter and any error that occurred during input.
+// input prompts the user to enter a single alphabetic character.
 func (g *HangmanGame) input() (string, error) {
 	prompt := promptui.Prompt{
 		Label: ">",
@@ -219,10 +208,7 @@ func (g *HangmanGame) input() (string, error) {
 	return strings.ToLower(in), nil
 }
 
-// processGuess processes a letter guess and updates the game state accordingly.
-// If the letter was already guessed, decrements remaining and resets streak.
-// If the letter is incorrect, adds it to incorrect list and resets streak.
-// If the letter is correct, fills in the answer positions and increases score based on streak.
+// processGuess processes a letter guess and updates the game state.
 func (g *HangmanGame) processGuess(letter string) {
 	if g.guesses[letter] {
 		g.streak = 0
@@ -250,8 +236,7 @@ func (g *HangmanGame) processGuess(letter string) {
 	g.guesses[letter] = true
 }
 
-// isWin checks if the player has won by comparing filled letters to the total alphabet length.
-// Returns true if all alphabetic characters in the word have been guessed.
+// isWin checks if the player has won the game.
 func (g *HangmanGame) isWin() bool {
 	return g.fill == g.alphabetLength
 }
