@@ -1,0 +1,16 @@
+Animal Name
+Cat,Kitty
+Dog,Puppy
+Donkey,Burro
+Goat,Hollow-horned Mammal
+Horse,Mustang
+Pig,Porky
+Rabbit,Bunny
+Sheep,Cattle
+Chicken,Hen
+Duck,Quack(sound)
+Goose,Singular of Geese
+Alligator,Crocodile
+Alpaca,Similar to Llama
+Anaconda,Giant Snake
+Dragon,Serpent-like Legendary Creature

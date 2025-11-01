@@ -1,0 +1,21 @@
+English Premier League 2018/2019 Team
+Arsenal,The Gunners
+Bournemouth,Vitality Stadium
+Brighton & Hove Albion,The Seagulls
+Burnley,The Clarets
+Cardiff City,The Bluebirds
+Chelsea,The Pensioners
+Crystal Palace,The Eagles
+Everton,The Toffees
+Fulham,The Cottagers
+Huddersfield Town,The Terriers
+Leicester City,The Foxes
+Liverpool,The Reds
+Manchester City,Sky Blues
+Manchester United,The Red Devils
+Newcastle United,The Magpies
+Southampton,The Saints
+Tottenham Hotspur,Spurs
+Watford,The Golden Boys
+West Ham United,The Hammers
+Wolverhampton Wanderers,Wolves
