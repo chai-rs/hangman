@@ -8,6 +8,8 @@ A simple command-line Hangman game written in Go.
 
 ## Prerequisites
 
+- Go 1.25.3 or higher
+
 Install Go from [https://go.dev/doc/install](https://go.dev/doc/install)
 
 ## Installation
