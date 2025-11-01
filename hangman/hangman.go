@@ -121,7 +121,7 @@ type HangmanGame struct {
 	answer         []string
 	incorrect      []string
 	alphabetLength int
-	fill           int
+	correctCount   int
 	remaining      int
 	score          int
 	streak         int
@@ -227,7 +227,7 @@ func (g *HangmanGame) processGuess(letter string) {
 	}
 
 	for _, loc := range locs {
-		g.fill++
+		g.correctCount++
 		g.answer[loc] = letter
 	}
 
@@ -238,5 +238,5 @@ func (g *HangmanGame) processGuess(letter string) {
 
 // isWin checks if the player has won the game.
 func (g *HangmanGame) isWin() bool {
-	return g.fill == g.alphabetLength
+	return g.correctCount == g.alphabetLength
 }

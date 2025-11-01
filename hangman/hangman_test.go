@@ -108,10 +108,10 @@ func TestHangmanGame_processGuess(t *testing.T) {
 	}
 
 	tests := []struct {
-		name           string
-		letter         string
-		setupFunc      func(*HangmanGame)
-		checkFunc      func(*testing.T, *HangmanGame)
+		name      string
+		letter    string
+		setupFunc func(*HangmanGame)
+		checkFunc func(*testing.T, *HangmanGame)
 	}{
 		{
 			name:   "correct guess - first time",
@@ -125,8 +125,8 @@ func TestHangmanGame_processGuess(t *testing.T) {
 				if g.streak != 1 {
 					t.Errorf("Expected streak 1, got %d", g.streak)
 				}
-				if g.fill != 1 {
-					t.Errorf("Expected fill 1, got %d", g.fill)
+				if g.correctCount != 1 {
+					t.Errorf("Expected fill 1, got %d", g.correctCount)
 				}
 				if g.answer[0] != "h" {
 					t.Errorf("Expected answer[0] = 'h', got '%s'", g.answer[0])
@@ -142,8 +142,8 @@ func TestHangmanGame_processGuess(t *testing.T) {
 			setupFunc: func(g *HangmanGame) {
 			},
 			checkFunc: func(t *testing.T, g *HangmanGame) {
-				if g.fill != 2 {
-					t.Errorf("Expected fill 2 (two 'l's), got %d", g.fill)
+				if g.correctCount != 2 {
+					t.Errorf("Expected fill 2 (two 'l's), got %d", g.correctCount)
 				}
 				if g.answer[2] != "l" || g.answer[3] != "l" {
 					t.Errorf("Expected answer[2] and answer[3] to be 'l'")
@@ -189,7 +189,7 @@ func TestHangmanGame_processGuess(t *testing.T) {
 			setupFunc: func(g *HangmanGame) {
 				g.guesses["h"] = true
 				g.answer[0] = "h"
-				g.fill = 1
+				g.correctCount = 1
 				g.streak = 1
 				g.score = 10
 			},
@@ -244,7 +244,7 @@ func TestHangmanGame_isWin(t *testing.T) {
 		{
 			name: "not won - partial guesses",
 			setupFunc: func(g *HangmanGame) {
-				g.fill = 3
+				g.correctCount = 3
 				g.alphabetLength = 5
 			},
 			wantWin: false,
@@ -252,7 +252,7 @@ func TestHangmanGame_isWin(t *testing.T) {
 		{
 			name: "won - all letters guessed",
 			setupFunc: func(g *HangmanGame) {
-				g.fill = 5
+				g.correctCount = 5
 				g.alphabetLength = 5
 			},
 			wantWin: true,
@@ -260,7 +260,7 @@ func TestHangmanGame_isWin(t *testing.T) {
 		{
 			name: "edge case - zero alphabet length",
 			setupFunc: func(g *HangmanGame) {
-				g.fill = 0
+				g.correctCount = 0
 				g.alphabetLength = 0
 			},
 			wantWin: true,
@@ -326,7 +326,7 @@ func TestHangmanGame_FullGameScenario(t *testing.T) {
 	if !game.isWin() {
 		t.Error("Game should be won after all letters guessed")
 	}
-	if game.fill != 3 {
-		t.Errorf("Expected fill 3, got %d", game.fill)
+	if game.correctCount != 3 {
+		t.Errorf("Expected fill 3, got %d", game.correctCount)
 	}
 }
